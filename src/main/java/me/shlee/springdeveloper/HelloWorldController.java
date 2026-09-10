@@ -15,30 +15,32 @@ public class HelloWorldController {
         return "Controller Hello";
     }
 
-    @GetMapping("/test")
-    // @ResponseBody
-    public String test() {
+//    @GetMapping("/test")
+//    // @ResponseBody
+//    public String test() {
+//
+//        return "Hello Everyone!!!!!!!";
+//    }
 
-        return "Hello Everyone!!!!!!!";
-    }
 
-    @PostMapping("/test")
-    public String postTest() {
-        return "Post Test response!!!!!";
-    }
 
-    @DeleteMapping("/test")
-    public String deleteTest() {
-        return "Delete test response!!!!";
-    }
-
-    @PutMapping("/test")
-    public String putTest() {
-        return "Put test response!!!!";
-    }
-
-    @PatchMapping("/test")
-    public String patchTest() {
-        return "Patch test response!!!!";
-    }
+//    @PostMapping("/test")
+//    public String postTest() {
+//        return "Post Test response!!!!!";
+//    }
+//
+//    @DeleteMapping("/test")
+//    public String deleteTest() {
+//        return "Delete test response!!!!";
+//    }
+//
+//    @PutMapping("/test")
+//    public String putTest() {
+//        return "Put test response!!!!";
+//    }
+//
+//    @PatchMapping("/test")
+//    public String patchTest() {
+//        return "Patch test response!!!!";
+//    }
 }
