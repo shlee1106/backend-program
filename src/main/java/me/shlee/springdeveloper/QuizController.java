@@ -10,9 +10,7 @@ public class QuizController {
     // 요청 URL과 요청 방식(GET, POST, PATCH, PUT, DELETE)에 따라 그 요청을 실행할 메소드를 매핑
 
     @GetMapping("/quiz")
-    public ResponseEntity<String> quiz(@RequestParam(value = "code", required = true) int code,
-                                       @RequestParam(value = "name", required = true) String name,
-                                       @RequestParam(value = "age", required = false, defaultValue = "20") String age) {
+    public ResponseEntity<String> quiz(@RequestParam(value = "code", required = true) int code) {
 
         switch (code) {
             case 1:
@@ -30,11 +28,11 @@ public class QuizController {
 
         switch (code.value()) {
             case 1:
-                return ResponseEntity.status(403).body("Created!");
+                return ResponseEntity.status(403).body("Forbidden!");
+            case 2:
+                return ResponseEntity.status(404).body("Not Found!");
             default:
                 return ResponseEntity.ok("OK!");
         }
-
-
     }
 }
