@@ -8,6 +8,8 @@ import java.util.Optional;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByName(String name);
+    // select * from member where name = ? limit 1; Top-N SQL문은 DMBS마다 다름
+
     Optional<Member> findByIdAndName(Long id, String name);
 
 

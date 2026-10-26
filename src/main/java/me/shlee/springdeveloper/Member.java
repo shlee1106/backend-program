@@ -6,7 +6,6 @@ import lombok.*;
 
 @Entity
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
@@ -15,6 +14,7 @@ public class Member {
     @Column(name = "id", updatable = false)
     private Long id;
 
+    @Setter(AccessLevel.PUBLIC)
     @Column(name = "name", nullable = false)
     private String name;
 
