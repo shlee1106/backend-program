@@ -4,7 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import me.shlee.springdeveloper.dao.Article;
 import me.shlee.springdeveloper.dto.ArticleCreationRequest;
 import me.shlee.springdeveloper.repository.BlogRepository;
-import me.shlee.springdeveloper.service.BlogService;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -32,6 +33,11 @@ public class BlogApiControllerTest {
 
     @Autowired
     private BlogRepository blogRepository;
+
+    @AfterEach
+    public void cleanUp() {
+        blogRepository.deleteAll();
+    }
 
     @Test
     @DisplayName("addArticle : 블로그 글 추가에 성공한다.")
@@ -54,5 +60,23 @@ public class BlogApiControllerTest {
         Article article = articles.get(0);
         assertThat(article.getTitle()).isEqualTo(title);
         assertThat(article.getContent()).isEqualTo(content);
+    }
+
+    @DisplayName("모든 블로그글 조회에 성공한다.")
+    @Test
+    public void getAllArticles() throws Exception {
+        // 준비 given : url, 데이터
+        final String url = "/api/articles";
+        final String title = "11월 5일 두번째 시간";
+        final String content = "모든 블로그글 조회 테스트 코드 작성";
+        blogRepository.save(Article.builder().content(content).title(title).build());
+
+        // 실행 when
+        ResultActions result = mockMvc.perform(get(url).accept(MediaType.APPLICATION_JSON));
+
+        // 검증 then
+        result.andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].title").value(title))
+                .andExpect(jsonPath("$[0].content").value(content));
     }
 }
