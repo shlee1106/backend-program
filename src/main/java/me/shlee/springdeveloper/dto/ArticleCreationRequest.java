@@ -9,8 +9,13 @@ import me.shlee.springdeveloper.dao.Article;
 public class ArticleCreationRequest {
     private String title;
     private String content;
+
+
     public Article toEntity() {
         // return new Aritcle(this.title, this.content);
-        return Article.builder().title(this.title).content(this.content).build();
+        return Article.builder()
+                .title(this.title).
+                content(this.content)
+                .build();
     }
 }

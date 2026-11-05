@@ -14,6 +14,7 @@ public class BlogService {
 
     @Transactional
     public Article save(ArticleCreationRequest articleCreationRequest) {
+
         return blogRepository.save(articleCreationRequest.toEntity());
     }
 }
