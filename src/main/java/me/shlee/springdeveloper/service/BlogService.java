@@ -42,7 +42,7 @@ public class BlogService {
         Article article = blogRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음"));
 
-        return new ArticleResponse(article);
+        return new ArticleResponse(article.getTitle(), article.getContent());
     }
 
     @Transactional
@@ -68,9 +68,6 @@ public class BlogService {
             }
         }
 
-        return ArticleCreationRequest.builder()
-                .title(article.getTitle())
-                .content(article.getContent())
-                .build();
+        return new ArticleCreationRequest(article.getTitle(), article.getContent());
     }
 }

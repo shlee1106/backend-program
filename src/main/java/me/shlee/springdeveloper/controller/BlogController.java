@@ -48,7 +48,7 @@ public class BlogController {
         return ResponseEntity.status(HttpStatus.OK).body(articleResponseList);
          */
         List<ArticleResponse> articleResponseList = blogService.findAll()
-                .stream().map(ArticleResponse::new).toList();
+                .stream().map(ArticleResponse::from).toList();
         return ResponseEntity.ok().body(articleResponseList);
     }
 
