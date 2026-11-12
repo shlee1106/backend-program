@@ -1,15 +1,20 @@
 package me.shlee.springdeveloper.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import me.shlee.springdeveloper.dao.Article;
 
 @Getter
-@AllArgsConstructor
 public class ArticleCreationRequest {
     private String title;
     private String content;
 
+    @Builder
+    public ArticleCreationRequest(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 
     public Article toEntity() {
         // return new Aritcle(this.title, this.content);
