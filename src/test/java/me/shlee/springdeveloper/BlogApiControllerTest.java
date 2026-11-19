@@ -16,6 +16,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -78,5 +80,50 @@ public class BlogApiControllerTest {
         result.andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value(title))
                 .andExpect(jsonPath("$[0].content").value(content));
+    }
+
+    @DisplayName("특정 블로그글 삭제를 성공한다.")
+    @Test
+    public void deleteByArticles() throws Exception{
+        // 준비 given
+        final String url = "/api/articles/{target}";
+        final String title = "11월 19일 수업";
+        final String content = "특정 블로그글 삭제";
+        Article article = new Article(title, content);
+        blogRepository.save(article);
+        Long id = article.getId();
+
+        // 실행 when
+        ResultActions result = mockMvc.perform(delete(url, id));
+
+        // 검증 then
+        result.andExpect(status().isOk());
+        Optional<Article> deleteArticle = blogRepository.findById(id);
+        assertThat(deleteArticle).isEmpty();
+    }
+
+    @DisplayName("특정 블로그글 수정을 성공한다.")
+    @Test
+    public void updateArticles() throws Exception{
+        // 준비 when
+        final String url = "/api/articles/{target}";
+        final String title = "11월 9일 수업";
+        final String content = "특정 게시글 수정";
+        Article article = new Article(title, content);
+        blogRepository.save(article);
+        Long id = article.getId();
+
+        final String updateTitle = "11월 9일 수정글";
+        final String updateContent = "특정 게시글 수정 완료";
+        ArticleCreationRequest req = new ArticleCreationRequest(updateTitle, updateContent);
+        // 실행 when
+        ResultActions result = mockMvc.perform(patch(url, id).contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(req)));
+
+        // 검증 then
+        Article updateArticle = blogRepository.findById(id).get();
+        result.andExpect(status().isOk());
+        assertThat(updateArticle.getTitle()).isEqualTo(updateTitle);
+        assertThat(updateArticle.getContent()).isEqualTo(updateContent);
     }
 }
