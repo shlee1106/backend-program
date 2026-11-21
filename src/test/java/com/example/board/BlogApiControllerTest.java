@@ -1,12 +1,9 @@
 package com.example.board;
 
 import com.example.board.dao.Article;
-import com.example.board.dto.ArticleDelete;
 import com.example.board.dto.ArticleRequest;
 import com.example.board.repository.BlogRepository;
-import com.example.board.service.ArticleService;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +14,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import tools.jackson.databind.ObjectMapper;
 
-import javax.xml.transform.Result;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class BlogControllerTest {
+public class BlogApiControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
