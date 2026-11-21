@@ -63,7 +63,7 @@ public class BlogApiControllerTest {
         assertThat(articles.size()).isEqualTo(1);
 
 
-        // 3. 제목, 본문 내용이 요청한 값과 같은지 확인
+        // 3. DB에 저장된 제목, 본문 내용이 요청한 값과 같은지 확인
         assertThat(articles.get(0).getTitle()).isEqualTo(title);
         assertThat(articles.get(0).getContent()).isEqualTo(content);
     }
@@ -119,8 +119,8 @@ public class BlogApiControllerTest {
         Article updateArticle = blogRepository.findById(id).get();
 
         result.andExpect(status().isOk()); // 상태코드 검증
-        assertThat(updateArticle.getTitle()).isEqualTo(newTitle); // 새로 등록된 title 검증
-        assertThat(updateArticle.getContent()).isEqualTo(newContent); // 새로 등록된 content 검증
+        assertThat(updateArticle.getTitle()).isEqualTo(newTitle); // DB에 새로 등록된 title 검증
+        assertThat(updateArticle.getContent()).isEqualTo(newContent); // DB에 새로 등록된 content 검증
 
     }
 
