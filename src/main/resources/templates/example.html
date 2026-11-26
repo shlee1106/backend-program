@@ -29,12 +29,21 @@
         <ul>
             <li th:each="hobby:*{hobbies}">
                 <span th:text="${hobby}" >운동</span>
-                <span th:if="${hobby=='운동'}">(대표취미)</span>
+                <span th:if="${hobby=='운동'}">(대표 취미)</span>
+<!--                <span th:unless="${hobby=='운동'}">(일반 취미)</span>-->
+                <span th:if="${hobby!='운동'}">(일반 취미)</span>
             </li>
         </ul>
+        <li th:each="article:${articles}">
+            <a th:href="@{/api/articles/{id}(id=${article.id})}">
+                <span th:text="${article.id}"></span>번
+                글보기
+            </a>
+        </li>
+
     </div>
 
 <!--    <a href="/api/articles">글보기</a>-->
-    <a th:href="@{/api/articles/{id}(id=${person.blogId})}">글보기</a>
+
 </body>
 </html>

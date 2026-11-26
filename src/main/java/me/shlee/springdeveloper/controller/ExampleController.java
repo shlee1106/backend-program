@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.shlee.springdeveloper.dao.Article;
 import me.shlee.springdeveloper.repository.BlogRepository;
+import me.shlee.springdeveloper.service.BlogService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +19,10 @@ import java.util.List;
 @RequestMapping("/thymeleaf")
 public class ExampleController {
     private final BlogRepository blogRepository;
-
-    public ExampleController(BlogRepository blogRepository) {
+    private final BlogService blogService;
+    public ExampleController(BlogRepository blogRepository, BlogService blogService) {
         this.blogRepository = blogRepository;
+        this.blogService = blogService;
     }
 
     @GetMapping("/example")
@@ -34,20 +36,22 @@ public class ExampleController {
         Person person = new Person();
         person.setAge(27);
         person.setName("이승희");
-        person.setBlogId(1L);
+        List<Article> Articles = blogService.findAll();
         person.setHobbies(List.of("운동", "독서", "영화감상", "음악감상"));
+        model.addAttribute("articles", Articles);
         model.addAttribute("person", person);
         model.addAttribute("date", LocalDate.now());
 
         return "example";
     }
 
-    @Getter
-    @Setter
-    class Person {
-        private String name;
-        private int age;
-        private List<String> hobbies;
-        private Long blogId;
-    }
+
+}
+@Getter
+@Setter
+class Person {
+    private String name;
+    private int age;
+    private List<String> hobbies;
+    private Long blogId;
 }
